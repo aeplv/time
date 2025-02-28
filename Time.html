@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Passed Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: green;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Why are we still here?</h1>
+    
+    <div id="output"></div>
+
+    <script>
+        function getRigaTime() {
+            const now = new Date();
+            const rigaOffset = 0 * 60; // Riga is UTC+2
+            const localOffset = now.getTimezoneOffset();
+            const rigaTime = new Date(now.getTime() + (rigaOffset - localOffset) * 60000);
+            return rigaTime.toISOString().slice(0, 16);
+        }
+
+        function calculateTimePassed() {
+            const startTime = new Date('2023-12-09T08:00');
+            const endTime = new Date(getRigaTime());
+            const output = document.getElementById('output');
+
+            if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
+                output.textContent = 'Please enter valid start and end times.';
+                return;
+            }
+
+            let delta = Math.abs(endTime - startTime) / 1000;
+
+            const days = Math.floor(delta / 86400);
+            delta -= days * 86400;
+
+            const hours = Math.floor(delta / 3600) % 24;
+            delta -= hours * 3600;
+
+            const minutes = Math.floor(delta / 60) % 60;
+            delta -= minutes * 60;
+
+            const seconds = Math.floor(delta % 60);
+
+            output.textContent = `Counting days: ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds / 500 days`;
+        }
+
+        function startLiveCalculation() {
+            calculateTimePassed();
+            setInterval(() => {
+                calculateTimePassed();
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', startLiveCalculation);
+    </script>
+</body>
+</html>
