@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Show Link in Window</title>
+  <title>Meme</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 40px; }
     #iframeContainer { margin-top: 20px; }
@@ -12,14 +12,12 @@
   </style>
 </head>
 <body>
-  <h2>Enter a Link to Load</h2>
-  <input type="text" id="linkInput" placeholder="Enter your link here..." />
-  <button onclick="showLink()">Show Link</button>
+  <h2>What the hell is even that...</h2>
   <div id="iframeContainer"></div>
 
   <script>
     function showLink() {
-      const link = document.getElementById('linkInput').value.trim();
+      const link = document.getElementById('https://aeplv.github.io/musicbox/musicbox.html').value.trim();
       const container = document.getElementById('iframeContainer');
       if (link) {
         container.innerHTML = `<iframe src="${link}" title="Result Window"></iframe>`;
