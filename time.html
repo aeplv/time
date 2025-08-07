@@ -1,85 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily meme time</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: green;
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden; /* Ensure no scrollbars appear */
-        }
-        #output {
-            margin-top: 20px;
-            font-size: 24px;
-        }
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Show Link Result</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    #result { margin-top: 20px; font-weight: bold; color: #2a72e5; }
+    input[type="text"] { width: 300px; padding: 6px; }
+    button { padding: 6px 12px; }
+  </style>
 </head>
 <body>
-    <h1>Why are we still here?</h1>
-    
-    <div id="output"></div>
+  <h2>Enter a Link to Display</h2>
+  <input type="text" id="linkInput" placeholder="Enter your link here..." />
+  <button onclick="showLink()">Show Link</button>
+  <div id="result"></div>
 
-    <script>
-        function getRigaTime() {
-            const now = new Date();
-            const rigaOffset = 120; // Riga is UTC+2
-            const localOffset = now.getTimezoneOffset();
-            const rigaTime = new Date(now.getTime() + (rigaOffset - localOffset) * 60000);
-            return rigaTime.toISOString().slice(0, 16);
-        }
-
-      function calculateTimePassed() {
-        const startTime = new Date('2023-12-09T08:00');
-        const endTime = new Date(getRigaTime());
-        const output = document.getElementById('output');
-
-        if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
-        output.textContent = 'Please enter valid start and end times.';
-        return;
-        }
-
-        let delta = Math.abs(endTime - startTime) / 1000;
-
-        const days = Math.floor(delta / 86400);
-        delta -= days * 86400;
-
-        const hours = Math.floor(delta / 3600) % 24;
-        delta -= hours * 3600;
-
-        const minutes = Math.floor(delta / 60) % 60;
-        delta -= minutes * 60;
-
-        const seconds = Math.floor(delta % 60);
-
-        // Use innerHTML to add a clickable link
-        output.innerHTML = `Counting days: ${days} days, ${hours} hours, ${minutes} minutes / 1000 days<br>
-        <a href="https://aeplv.github.io/musicbox/musicbox.html" target="_blank" style="color:yellow;">View the code</a>`;
-}
-
-        function startLiveCalculation() {
-            calculateTimePassed();
-            setInterval(() => {
-                calculateTimePassed();
-            }, 1000);
-        }
-
-        document.addEventListener('DOMContentLoaded', startLiveCalculation);
-
+  <script>
+    function showLink() {
+      const link = document.getElementById('linkInput').value.trim();
+      if (link) {
+        document.getElementById('result').innerHTML = 
+          `Result: <a href="${link}" target="_blank">${link}</a>`;
+      } else {
+        document.getElementById('result').innerHTML = "Please enter a valid link.";
+      }
+    }
+  </script>
 </body>
 </html>
