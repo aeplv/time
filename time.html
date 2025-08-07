@@ -44,31 +44,33 @@
             return rigaTime.toISOString().slice(0, 16);
         }
 
-        function calculateTimePassed() {
-            const startTime = new Date('2023-12-09T08:00');
-            const endTime = new Date(getRigaTime());
-            const output = document.getElementById('output');
+      function calculateTimePassed() {
+        const startTime = new Date('2023-12-09T08:00');
+        const endTime = new Date(getRigaTime());
+        const output = document.getElementById('output');
 
-            if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
-                output.textContent = 'Please enter valid start and end times.';
-                return;
-            }
-
-            let delta = Math.abs(endTime - startTime) / 1000;
-
-            const days = Math.floor(delta / 86400);
-            delta -= days * 86400;
-
-            const hours = Math.floor(delta / 3600) % 24;
-            delta -= hours * 3600;
-
-            const minutes = Math.floor(delta / 60) % 60;
-            delta -= minutes * 60;
-
-            const seconds = Math.floor(delta % 60);
-
-            output.textContent = `Counting days: ${days} days, ${hours} hours, ${minutes} minutes / 500 days`;
+        if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
+        output.textContent = 'Please enter valid start and end times.';
+        return;
         }
+
+        let delta = Math.abs(endTime - startTime) / 1000;
+
+        const days = Math.floor(delta / 86400);
+        delta -= days * 86400;
+
+        const hours = Math.floor(delta / 3600) % 24;
+        delta -= hours * 3600;
+
+        const minutes = Math.floor(delta / 60) % 60;
+        delta -= minutes * 60;
+
+        const seconds = Math.floor(delta % 60);
+
+        // Use innerHTML to add a clickable link
+        output.innerHTML = `Counting days: ${days} days, ${hours} hours, ${minutes} minutes / 1000 days<br>
+        <a href="https://aeplv.github.io/musicbox/musicbox.html" target="_blank" style="color:yellow;">View the code</a>`;
+}
 
         function startLiveCalculation() {
             calculateTimePassed();
@@ -78,27 +80,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', startLiveCalculation);
-    </script>
 
-    <!-- Falling Confetti Effect -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script>
-        // Launch confetti every 5 seconds
-        function launchConfetti() {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        }
-
-        // Trigger confetti every 5 seconds
-        setInterval(() => {
-            launchConfetti();
-        }, 5000);
-
-        // Launch a burst of confetti at the start
-        launchConfetti();
-    </script>
 </body>
 </html>
